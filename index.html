@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,9 +13,7 @@
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-
   <link rel="stylesheet" href="dist/css/style.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,9 +22,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
   <!-- Google Font -->
-
 </head>
-
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
     <header class="main-header">
@@ -39,18 +34,19 @@
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">
           <b>ePub</b>Alt Tool</span>
+		  
       </a>
       <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
         <!-- Sidebar toggle button-->
+		<div class="col-md-1">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
           <span class="sr-only">Toggle navigation</span>
         </a>
-
-        <div class="col-md-3">
+		</div>
+        <div class="col-md-2">
           <div class="form-group margin-top-1">
             <select class="form-control " id="sel1">
-           
             </select>
           </div>
         </div>
@@ -59,7 +55,7 @@
             <input id="URLbar" type="text" class="form-control color-white cursor-default-1" disabled>
           </div>
         </div>
-
+		<div class="col-md-2">
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
             <li id="nav-left-1">
@@ -73,18 +69,16 @@
               </a>
             </li>
             <!-- Tasks: style can be found in dropdown.less -->
-
             <!-- User Account: style can be found in dropdown.less -->
             <li id="save-page-1" class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
-                <span class="hidden-xs">Save page</span>
+                <span class="">Save page</span>
               </a>
             </li>
             <!-- Control Sidebar Toggle Button -->
-
           </ul>
         </div>
+		</div>
       </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
@@ -93,8 +87,6 @@
       <section class="sidebar">
         <!-- Sidebar user panel -->
         <!-- search form -->
-
-
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
@@ -108,7 +100,6 @@
               <textarea id="alt-text-2" class="form-control color-white min-height-1" placeholder="Insert alt text here..."></textarea>
             </div>
           </form>
-
           <li id="insert-alt-text-2" class="active treeview">
             <a href="#" class="text-center">
               <i class=""></i>
@@ -119,19 +110,15 @@
             </a>
           </li>
           <li id="current-selected-label-1">
-
           </li>
           <li>
             <div id="selectedImage" class="">
               <img class="img-width-height" />
-
             </div>
           </li>
           <li id="current-label">
-
           </li>
           <li id="image-selected-1">
-
           </li>
         </ul>
       </section>
@@ -142,9 +129,13 @@
       <iframe class="iframe-width-height" src="" id="epub_iframe">
       </iframe>
     </div>
-
     <div class="control-sidebar-bg"></div>
   </div>
+  <div id="snackbar-select-image" class="snackbar">Please select an image.</div>
+  <div id="snackbar-enter" class="snackbar">Please enter some alt text to insert.</div>
+  <div id="snackbar-error-saving" class="snackbar">Error saving.</div>
+  <div id="snackbar-saved-success" class="snackbar">Saved.</div>
+  <div id="snackbar-make-changes" class="snackbar">Please make some changes first.</div>
   <!-- ./wrapper -->
   <!-- jQuery 3 -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -155,5 +146,4 @@
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/iframe_script.js"></script>
 </body>
-
 </html>

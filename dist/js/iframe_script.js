@@ -55,10 +55,12 @@ $("#nav-right-1").click(function () {
 });
 $("#insert-alt-text-2").click(function () {
     if (!currentTarget) {
-        alert("Please select an image.")
+        showSnackBarAlert("snackbar-select-image");
+        //alert("Please select an image.")
     } else {
         if ($("#alt-text-2").val().trim() == "") {
-            alert("Please enter some alt text to insert.")
+            showSnackBarAlert("snackbar-enter");
+            //alert("Please enter some alt text to insert.")
         } else {
             changesMade = true;
             var a = $(currentTarget[0]).attr("class").toString();
@@ -106,15 +108,23 @@ $("#save-page-1").click(function () {
             url: "//localhost:3000/iframeData",
             data: JSON.parse(b),
             error: function c() {
-                alert("Error saving!")
+                showSnackBarAlert("snackbar-error-saving");
+                //alert("Error saving!")
             },
             dataType: "text",
             success: function e(f) {
-                alert("Saved!")
+                showSnackBarAlert("snackbar-saved-success");
+                //alert("Saved!")
             },
             type: "POST"
         })
     } else {
-        alert("Please make some changes first.")
+        showSnackBarAlert("snackbar-make-changes");
+        //alert("Please make some changes first.")
     }
 });
+
+function showSnackBarAlert(msgID) {
+    $("#"+msgID).addClass("show");
+    setTimeout(function(){ $("#"+msgID).removeClass("show") }, 2500);
+}

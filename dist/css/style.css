@@ -1,22 +1,23 @@
-#snackbar {
+.snackbar {
     visibility: hidden;
     min-width: 250px;
     margin-left: -125px;
     background-color: #333;
     color: #fff;
     text-align: center;
-    border-radius: 2px;
-    padding: 16px;
+    border-radius: 5px;
+    padding: 13px;
     position: fixed;
     z-index: 1;
     left: 50%;
     top: 30px;
-    font-size: 17px;
+    font-size: 15px;
 }
-#snackbar.show {
+.snackbar.show {
+    z-index: 99999;
     visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    -webkit-animation: fadein 0.5s, fadeout 0.75s 1.75s;
+    animation: fadein 0.5s, fadeout 0.75s 1.75s;
 }
 
 @-webkit-keyframes fadein {
