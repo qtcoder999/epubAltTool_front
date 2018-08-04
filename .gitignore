@@ -5,7 +5,7 @@
 /json/*
 
 # compiled output
-/dist
+
 /tmp
 /out-tsc
 
