@@ -68,7 +68,8 @@ $("#insert-alt-text-2").click(function () {
             var a = $(currentTarget[0]).attr("class").toString();
             $iframeDOM.find("." + a).attr("alt", $("#alt-text-2").val());
             $("#currentAltText-1").val($iframeDOM.find("." + a).attr("alt"));
-            $("#alt-text-2").val("")
+            $("#alt-text-2").val("");
+            ImageCounter()
         }
     }
 });
@@ -78,6 +79,7 @@ var getDocTypeAsString = function getDocTypeAsString() {
 };
 myIframe.addEventListener("load", function () {
     $iframeDOM = $(myIframe).contents();
+    ImageCounter();
     $iframeDOM.find("body").on("click", function (a) {
         var b = $(a.target).clone();
         if (b.is("img")) {
@@ -93,7 +95,7 @@ myIframe.addEventListener("load", function () {
     })
 });
 
-function checkScroll(scrollPos){
+function checkScroll(scrollPos) {
     myIframe.addEventListener("load", function () {
         $('#epub_iframe').contents().scrollTop(scrollPos);
     });
@@ -127,6 +129,7 @@ $("#save-page-1").click(function () {
                 var scrollPos = $('#epub_iframe').contents().scrollTop();
                 $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
                 checkScroll(scrollPos);
+                ImageCounter();
                 //alert("Saved!")
             },
             type: "POST"
@@ -139,7 +142,7 @@ $("#save-page-1").click(function () {
 
 $("#start-1").click(function () {
     var currentProjectName = $('#sel1').find(":selected").text();
-    var d = { path :  escape(currentProjectName.trim()) };
+    var d = { path: escape(currentProjectName.trim()) };
     //console.log(d);
     $.ajax({
         url: "//localhost:3000/start",
@@ -154,16 +157,17 @@ $("#start-1").click(function () {
             var scrollPos = $('#epub_iframe').contents().scrollTop();
             $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
             checkScroll(scrollPos);
+            ImageCounter();
             //alert("Saved!")
         },
         type: "POST"
     })
-    
+
 });
 
 $("#end-1").click(function () {
     var currentProjectName = $('#sel1').find(":selected").text();
-    var d = { path :  escape(currentProjectName.trim()) };
+    var d = { path: escape(currentProjectName.trim()) };
     //console.log(d);
     $.ajax({
         url: "//localhost:3000/end",
@@ -176,13 +180,22 @@ $("#end-1").click(function () {
         success: function e(f) {
             showSnackBarAlert("snackbar-saved-ending");
             $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
+            ImageCounter();
             //alert("Saved!")
         },
         type: "POST"
     })
 });
 
+function ImageCounter(){
+    var count = $("#epub_iframe").contents().find("img").length;
+    if($("#epub_iframe").contents().find("img").prop('alt') != "Placeholder Text"){
+        count --;
+    }
+    $("#image-counter").text(count);
+}
+
 function showSnackBarAlert(msgID) {
-    $("#"+msgID).addClass("show");
-    setTimeout(function(){ $("#"+msgID).removeClass("show") }, 2500);
+    $("#" + msgID).addClass("show");
+    setTimeout(function () { $("#" + msgID).removeClass("show") }, 2500);
 }
