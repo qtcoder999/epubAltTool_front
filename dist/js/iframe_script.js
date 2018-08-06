@@ -20,7 +20,7 @@ $.ajax({
         }
         reponseFromServer = b;
         URLs = reponseFromServer[0];
-        $("#epub_iframe").attr("src", "../server/" + URLs.paths[0].path);
+        $("#epub_iframe").attr("src", "../server/" + URLs.paths[0].path + "?rand=" + Math.round(Math.random() * 10000000));
         $("#URLbar").val("../server/" + URLs.paths[0].path);
         currentIndex = 0
     }
@@ -29,14 +29,14 @@ $("#sel1").on("change", function (b) {
     var c = $("option:selected", this);
     var a = this.value;
     URLs = reponseFromServer[a];
-    $("#epub_iframe").attr("src", "../server/" + URLs.paths[0].path);
+    $("#epub_iframe").attr("src", "../server/" + URLs.paths[0].path + "?rand=" + Math.round(Math.random() * 10000000));
     $("#URLbar").val("../server/" + URLs.paths[0].path);
     currentIndex = 0
 });
 $("#nav-left-1").click(function () {
     if (currentIndex - 1 >= 0) {
         myIframe = document.getElementById("epub_iframe");
-        $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex - 1].path);
+        $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex - 1].path + "?rand=" + Math.round(Math.random() * 10000000));
         //console.log(currentIndex);
         $("#URLbar").val("../server/" + URLs.paths[currentIndex - 1].path);
         currentIndex -= 1;
@@ -47,7 +47,7 @@ $("#nav-left-1").click(function () {
 $("#nav-right-1").click(function () {
     if (currentIndex + 1 <= URLs.paths.length - 1) {
         myIframe = document.getElementById("epub_iframe");
-        $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex + 1].path);
+        $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex + 1].path + "?rand=" + Math.round(Math.random() * 10000000));
         //console.log(currentIndex);
         $("#URLbar").val("../server/" + URLs.paths[currentIndex + 1].path);
         currentIndex += 1;
@@ -93,6 +93,12 @@ myIframe.addEventListener("load", function () {
     })
 });
 
+function checkScroll(scrollPos){
+    myIframe.addEventListener("load", function () {
+        $('#epub_iframe').contents().scrollTop(scrollPos);
+    });
+}
+
 function removeImageSupportTools() {
     $("#selectedImage").html('<img src=""/>');
     $(".selectedImageSupport").remove();
@@ -118,7 +124,9 @@ $("#save-page-1").click(function () {
             dataType: "text",
             success: function e(f) {
                 showSnackBarAlert("snackbar-saved-success");
+                var scrollPos = $('#epub_iframe').contents().scrollTop();
                 $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
+                checkScroll(scrollPos);
                 //alert("Saved!")
             },
             type: "POST"
@@ -132,7 +140,7 @@ $("#save-page-1").click(function () {
 $("#start-1").click(function () {
     var currentProjectName = $('#sel1').find(":selected").text();
     var d = { path :  escape(currentProjectName.trim()) };
-    console.log(d);
+    //console.log(d);
     $.ajax({
         url: "//localhost:3000/start",
         data: d,
@@ -143,7 +151,9 @@ $("#start-1").click(function () {
         dataType: "text",
         success: function e(f) {
             showSnackBarAlert("snackbar-saved-starting");
+            var scrollPos = $('#epub_iframe').contents().scrollTop();
             $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
+            checkScroll(scrollPos);
             //alert("Saved!")
         },
         type: "POST"
@@ -154,17 +164,17 @@ $("#start-1").click(function () {
 $("#end-1").click(function () {
     var currentProjectName = $('#sel1').find(":selected").text();
     var d = { path :  escape(currentProjectName.trim()) };
-    console.log(d);
+    //console.log(d);
     $.ajax({
         url: "//localhost:3000/end",
         data: d,
         error: function c() {
-            showSnackBarAlert("snackbar-error-starting");
+            showSnackBarAlert("snackbar-error-ending");
             //alert("Error saving!")
         },
         dataType: "text",
         success: function e(f) {
-            showSnackBarAlert("snackbar-saved-starting");
+            showSnackBarAlert("snackbar-saved-ending");
             $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
             //alert("Saved!")
         },
