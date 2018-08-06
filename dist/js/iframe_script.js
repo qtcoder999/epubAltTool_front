@@ -4,7 +4,8 @@ var reponseFromServer = void 0,
     currentIndex = void 0,
     $iframeDOM = void 0,
     currentTarget = null,
-    changesMade = false;
+    changesMade = false,
+    cssAdded = false;
 var myIframe = document.getElementById("epub_iframe");
 $.ajax({
     url: "./json/data.json",
@@ -32,6 +33,7 @@ $("#sel1").on("change", function (b) {
     $("#epub_iframe").attr("src", "../server/" + URLs.paths[0].path + "?rand=" + Math.round(Math.random() * 10000000));
     $("#URLbar").val("../server/" + URLs.paths[0].path);
     currentIndex = 0
+    removeImageSupportTools();
 });
 $("#nav-left-1").click(function () {
     if (currentIndex - 1 >= 0) {
@@ -84,6 +86,9 @@ myIframe.addEventListener("load", function () {
         var b = $(a.target).clone();
         if (b.is("img")) {
             currentTarget = $(a.target).clone();
+            if(!cssAdded){
+                addCSSToIframe(currentTarget);
+             }
             $("#selectedImage img").addClass("img-width-height");
             $("#selectedImage img").attr("src", $(b[0]).prop("src"));
             $("#current-selected-label-1").html('<a class="selectedImageSupport cursor-default-1" href="#"><span>Currently selected image</span></a>');
@@ -94,7 +99,29 @@ myIframe.addEventListener("load", function () {
         }
     })
 });
+function addCSSToIframe(currentTarget){
+    var $head = $("#epub_iframe").contents().find("head");                
+    $head.append($("<link/>", 
+    { rel: "stylesheet", href: window.origin + "/front/dist/css/iframe-style.css", type: "text/css" }));
+    $iframeDOM = $("#epub_iframe").contents();
+    
+    var a = $(currentTarget[0]).attr("class");
+    $iframeDOM.find("." + a).addClass('outline-3px');
+    cssAdded = true;
+    
+}
+function removeCSSFromIframe(){
+    $("#epub_iframe").contents().find("link").each(function() {
+        if($(this).attr('href').indexOf('iframe-style.css') > -1 ){
+            $(this).remove();
+        }
+    });
 
+    $("#epub_iframe").contents().find(".outline-3px").each(function() {
+        $(this).removeClass('outline-3px');
+    });
+    cssAdded = false;
+}
 function checkScroll(scrollPos) {
     myIframe.addEventListener("load", function () {
         $('#epub_iframe').contents().scrollTop(scrollPos);
@@ -106,8 +133,10 @@ function removeImageSupportTools() {
     $(".selectedImageSupport").remove();
     currentTarget = null;
     $("#alt-text-2").val("")
+    removeCSSFromIframe();
 }
 $("#save-page-1").click(function () {
+    removeImageSupportTools();
     if (changesMade) {
         var b = '{ "DOM" : "' + escape(getDocTypeAsString() + $iframeDOM.find("html")[0].outerHTML) + '", "path" : "' + $("#epub_iframe").contents().get(0).location.pathname + ' "}';
         // var a = $("#epub_iframe").contents().get(0).location.pathname.split("/");
@@ -116,6 +145,7 @@ $("#save-page-1").click(function () {
         // d = d.join("/");
         // d += "?rand=" + Math.round(Math.random() * 10000000);
         // console.log(d);
+        
         $.ajax({
             url: "//localhost:3000/iframeData",
             data: JSON.parse(b),
@@ -141,6 +171,7 @@ $("#save-page-1").click(function () {
 });
 
 $("#start-1").click(function () {
+    removeImageSupportTools();
     var currentProjectName = $('#sel1').find(":selected").text();
     var d = { path: escape(currentProjectName.trim()) };
     //console.log(d);
@@ -166,6 +197,7 @@ $("#start-1").click(function () {
 });
 
 $("#end-1").click(function () {
+    removeImageSupportTools();
     var currentProjectName = $('#sel1').find(":selected").text();
     var d = { path: escape(currentProjectName.trim()) };
     //console.log(d);

@@ -54,9 +54,8 @@ html{
 	background: #fff!important;
 }
 .iframe-width-height{
-    /* width: 880px; */
     width: 100%;
-    height: 100vh;
+    height: 85vh;
     border: none;
     /*display: block;
     margin: 0 auto;*/
