@@ -189,8 +189,17 @@ $("#end-1").click(function () {
 
 function ImageCounter(){
     var count = $("#epub_iframe").contents().find("img").length;
+
     if($("#epub_iframe").contents().find("img").prop('alt') != "Placeholder Text"){
         count --;
+    }
+    if(count == 0){
+        $("#image-counter-box").removeClass('bg-blue');
+        $("#image-counter-box").addClass('bg-green');
+    }
+    else if(count > 0){
+        $("#image-counter-box").addClass('bg-blue');
+        $("#image-counter-box").removeClass('bg-green');
     }
     $("#image-counter").text(count);
 }

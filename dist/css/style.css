@@ -110,5 +110,8 @@ html{
     background-color: #3c8dbc !important;
 }
 .margin-right-1{
-    margin-right : 7px;
+    margin-right : 7px!important;
+}
+.margin-left-1{
+    margin-right : 7px!important;
 }
