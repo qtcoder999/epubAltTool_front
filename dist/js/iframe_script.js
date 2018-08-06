@@ -37,6 +37,7 @@ $("#nav-left-1").click(function () {
     if (currentIndex - 1 >= 0) {
         myIframe = document.getElementById("epub_iframe");
         $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex - 1].path);
+        //console.log(currentIndex);
         $("#URLbar").val("../server/" + URLs.paths[currentIndex - 1].path);
         currentIndex -= 1;
         removeImageSupportTools();
@@ -47,6 +48,7 @@ $("#nav-right-1").click(function () {
     if (currentIndex + 1 <= URLs.paths.length - 1) {
         myIframe = document.getElementById("epub_iframe");
         $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex + 1].path);
+        //console.log(currentIndex);
         $("#URLbar").val("../server/" + URLs.paths[currentIndex + 1].path);
         currentIndex += 1;
         removeImageSupportTools();
@@ -100,10 +102,12 @@ function removeImageSupportTools() {
 $("#save-page-1").click(function () {
     if (changesMade) {
         var b = '{ "DOM" : "' + escape(getDocTypeAsString() + $iframeDOM.find("html")[0].outerHTML) + '", "path" : "' + $("#epub_iframe").contents().get(0).location.pathname + ' "}';
-        var a = $("#epub_iframe").contents().get(0).location.pathname.split("/");
-        var d;
-        d = a.splice(2);
-        d = d.join("/");
+        // var a = $("#epub_iframe").contents().get(0).location.pathname.split("/");
+        // var d;
+        // d = a.splice(2);
+        // d = d.join("/");
+        // d += "?rand=" + Math.round(Math.random() * 10000000);
+        // console.log(d);
         $.ajax({
             url: "//localhost:3000/iframeData",
             data: JSON.parse(b),
@@ -114,6 +118,7 @@ $("#save-page-1").click(function () {
             dataType: "text",
             success: function e(f) {
                 showSnackBarAlert("snackbar-saved-success");
+                $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
                 //alert("Saved!")
             },
             type: "POST"
@@ -122,6 +127,49 @@ $("#save-page-1").click(function () {
         showSnackBarAlert("snackbar-make-changes");
         //alert("Please make some changes first.")
     }
+});
+
+$("#start-1").click(function () {
+    var currentProjectName = $('#sel1').find(":selected").text();
+    var d = { path :  escape(currentProjectName.trim()) };
+    console.log(d);
+    $.ajax({
+        url: "//localhost:3000/start",
+        data: d,
+        error: function c() {
+            showSnackBarAlert("snackbar-error-starting");
+            //alert("Error saving!")
+        },
+        dataType: "text",
+        success: function e(f) {
+            showSnackBarAlert("snackbar-saved-starting");
+            $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
+            //alert("Saved!")
+        },
+        type: "POST"
+    })
+    
+});
+
+$("#end-1").click(function () {
+    var currentProjectName = $('#sel1').find(":selected").text();
+    var d = { path :  escape(currentProjectName.trim()) };
+    console.log(d);
+    $.ajax({
+        url: "//localhost:3000/end",
+        data: d,
+        error: function c() {
+            showSnackBarAlert("snackbar-error-starting");
+            //alert("Error saving!")
+        },
+        dataType: "text",
+        success: function e(f) {
+            showSnackBarAlert("snackbar-saved-starting");
+            $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
+            //alert("Saved!")
+        },
+        type: "POST"
+    })
 });
 
 function showSnackBarAlert(msgID) {
