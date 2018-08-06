@@ -92,3 +92,13 @@ html{
     margin-top: 8px;
     margin-bottom: 0!important;
 }
+.padding-left-right-off{
+	padding-left: 0!important;
+	padding-right: 0!important;
+}
+.padding-right-off{
+	padding-right: 0!important;
+}
+.padding-left-off{
+	padding-left: 0!important;
+}
