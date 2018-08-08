@@ -1,4 +1,5 @@
 "use strict";
+var baseURL = "http://cnf-gcb-335331:3000/";
 var reponseFromServer = void 0,
     URLs = void 0,
     currentIndex = void 0,
@@ -147,7 +148,7 @@ $("#save-page-1").click(function () {
         // console.log(d);
         
         $.ajax({
-            url: "//localhost:3000/iframeData",
+            url: baseURL + "iframeData",
             data: JSON.parse(b),
             error: function c() {
                 showSnackBarAlert("snackbar-error-saving");
@@ -176,7 +177,7 @@ $("#start-1").click(function () {
     var d = { path: escape(currentProjectName.trim()) };
     //console.log(d);
     $.ajax({
-        url: "//localhost:3000/start",
+        url: baseURL + "start",
         data: d,
         error: function c() {
             showSnackBarAlert("snackbar-error-starting");
@@ -202,7 +203,7 @@ $("#end-1").click(function () {
     var d = { path: escape(currentProjectName.trim()) };
     //console.log(d);
     $.ajax({
-        url: "//localhost:3000/end",
+        url: baseURL + "end",
         data: d,
         error: function c() {
             showSnackBarAlert("snackbar-error-ending");
