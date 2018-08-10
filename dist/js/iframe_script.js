@@ -105,11 +105,9 @@ function addCSSToIframe(currentTarget){
     $head.append($("<link/>", 
     { rel: "stylesheet", href: window.origin + "/front/dist/css/iframe-style.css", type: "text/css" }));
     $iframeDOM = $("#epub_iframe").contents();
-    
     var a = $(currentTarget[0]).attr("class");
     $iframeDOM.find("." + a).addClass('outline-3px');
     cssAdded = true;
-    
 }
 function removeCSSFromIframe(){
     $("#epub_iframe").contents().find("link").each(function() {
@@ -117,7 +115,6 @@ function removeCSSFromIframe(){
             $(this).remove();
         }
     });
-
     $("#epub_iframe").contents().find(".outline-3px").each(function() {
         $(this).removeClass('outline-3px');
     });
@@ -128,7 +125,6 @@ function checkScroll(scrollPos) {
         $('#epub_iframe').contents().scrollTop(scrollPos);
     });
 }
-
 function removeImageSupportTools() {
     $("#selectedImage").html('<img src=""/>');
     $(".selectedImageSupport").remove();
@@ -146,7 +142,6 @@ $("#save-page-1").click(function () {
         // d = d.join("/");
         // d += "?rand=" + Math.round(Math.random() * 10000000);
         // console.log(d);
-        
         $.ajax({
             url: baseURL + "iframeData",
             data: JSON.parse(b),
@@ -170,7 +165,6 @@ $("#save-page-1").click(function () {
         //alert("Please make some changes first.")
     }
 });
-
 $("#start-1").click(function () {
     removeImageSupportTools();
     var currentProjectName = $('#sel1').find(":selected").text();
@@ -194,9 +188,7 @@ $("#start-1").click(function () {
         },
         type: "POST"
     })
-
 });
-
 $("#end-1").click(function () {
     removeImageSupportTools();
     var currentProjectName = $('#sel1').find(":selected").text();
@@ -219,10 +211,8 @@ $("#end-1").click(function () {
         type: "POST"
     })
 });
-
 function ImageCounter(){
     var count = $("#epub_iframe").contents().find("img").length;
-
     if($("#epub_iframe").contents().find("img").prop('alt') != "Placeholder Text"){
         count --;
     }
@@ -236,7 +226,6 @@ function ImageCounter(){
     }
     $("#image-counter").text(count);
 }
-
 function showSnackBarAlert(msgID) {
     $("#" + msgID).addClass("show");
     setTimeout(function () { $("#" + msgID).removeClass("show") }, 2500);
