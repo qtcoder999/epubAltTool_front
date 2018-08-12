@@ -114,3 +114,9 @@ html{
 .margin-left-1{
     margin-right : 7px!important;
 }
+.small-box h3{
+    font-size: 30px!important;
+}
+.skin-blue .main-header .navbar .nav>li>a:hover, .skin-blue .main-header .navbar .nav>li>a:active, .skin-blue .main-header .navbar .nav .open>a, .skin-blue .main-header .navbar .nav .open>a:hover, .skin-blue .main-header .navbar .nav .open>a:focus, .skin-blue .main-header .navbar .nav>.active>a{
+    background-color: transparent; 
+}
