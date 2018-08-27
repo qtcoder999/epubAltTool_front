@@ -72,7 +72,7 @@ $("#insert-alt-text-2").click(function () {
             for (const x in a) {
                 if (a[x].indexOf('selected') > -1) {
                     a = a[x];
-                    console.log(a);
+                    //console.log(a);
                 }
             }
             $iframeDOM.find("." + a).attr("alt", $("#alt-text-2").val());
@@ -95,24 +95,26 @@ $("#delete-image-1").click(function () {
     showSnackBarAlert("snackbar-image-deletion");
     changesMade = true;
 });
-// $("#crop-image-1").click(function () {
-//     var a = $(currentTarget[0]).attr("class").toString();
-//     a = a.split(" ");
-//     for (const x in a) {
-//         if (a[x].indexOf('selected') > -1) {
-//             a = a[x];
-//         }
-//     }
-//     console.log($(currentTarget[0]).prop('src'));
-//     $('body').append('<a href='+ $(currentTarget[0]).prop('src') + ' data-toggle="lightbox"><img src=' + $(currentTarget[0]).prop('src') +'></a>');
-//     $('[data-toggle="lightbox"]').ekkoLightbox();
-//     cropMode('[data-toggle="lightbox"] img');
-//     cropMode();
+$("#crop-image-1").click(function () {
+    localStorage.setItem("ImageToCrop", $(currentTarget[0]).prop('src'));
+    window.open("/crop/");
+    // var a = $(currentTarget[0]).attr("class").toString();
+    // a = a.split(" ");
+    // for (const x in a) {
+    //     if (a[x].indexOf('selected') > -1) {
+    //         a = a[x];
+    //     }
+    // }
+    // console.log($(currentTarget[0]).prop('src'));
+    // $('body').append('<a href='+ $(currentTarget[0]).prop('src') + ' data-toggle="lightbox"><img src=' + $(currentTarget[0]).prop('src') +'></a>');
+    // $('[data-toggle="lightbox"]').ekkoLightbox();
+    // cropMode('[data-toggle="lightbox"] img');
+    // cropMode();
 
 
-//     showSnackBarAlert("snackbar-image-crop");
+    // showSnackBarAlert("snackbar-image-crop");
 
-// });
+});
 var getDocTypeAsString = function getDocTypeAsString() {
     var a = document.doctype;
     return a ? "<!DOCTYPE " + a.name + (a.publicId ? ' PUBLIC "' + a.publicId + '"' : "") + (!a.publicId && a.systemId ? " SYSTEM" : "") + (a.systemId ? ' "' + a.systemId + '"' : "") + ">\n" : ""
@@ -141,14 +143,13 @@ myIframe.addEventListener("load", function () {
         var b = $(a.target).clone();
         if (b.is("img")) {
             currentTarget = $(a.target).clone();
-
             $("#selectedImage img").addClass("img-width-height");
             $("#selectedImage img").attr("src", $(b[0]).prop("src"));
             $("#current-selected-label-1").html('<a class="selectedImageSupport cursor-default-1" href="#"><span>Currently selected image</span></a>');
             $("#current-label").html('<a class="padding-bottom-off-1 selectedImageSupport cursor-default-1" href="#"><span>Current alt text</span></a>');
             $("#image-selected-1").html('<form class="sidebar-form selectedImageSupport cursor-default-1"><div class="input-group width-100"><textarea id="currentAltText-1" class="form-control color-white min-height-1 cursor-default-1" disabled>' + $(b[0]).prop("alt") + "</textarea></div></form>")
             $("#delete-image-1").html('<a href="#" class="text-center"> <i class=""></i> <span id="">Delete</span> </a>');
-            //$("#crop-image-1").html('<a href="#" class="text-center"> <i class=""></i> <span id="">Crop</span> </a>');
+            $("#crop-image-1").html('<a href="#" class="text-center"> <i class=""></i> <span id="">Crop</span> </a>');
         } else {
             removeImageSupportTools()
         }
@@ -183,7 +184,7 @@ function removeImageSupportTools() {
     $("#selectedImage").html('<img src=""/>');
     $(".selectedImageSupport").remove();
     $("#delete-image-1").html('');
-    //$("#crop-image-1").html('');
+    $("#crop-image-1").html('');
     currentTarget = null;
     $("#alt-text-2").val("");
 }
