@@ -1,5 +1,10 @@
 "use strict";
-var baseURL = "http://cnf-gcb-335331:3000/";
+var baseURL;
+
+$.getJSON("./json/config-development.json", function(json) {
+    baseURL = json.node_server_addr;
+});
+
 var reponseFromServer = void 0,
     URLs = void 0,
     currentIndex = void 0,
