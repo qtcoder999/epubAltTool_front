@@ -64,6 +64,23 @@ $("#nav-right-1").click(function () {
         cssAdded = false;
     }
 });
+// window.addEventListener('focus', function() {
+//     console.log("Currently in focus");
+//     $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
+//     changesMade = false
+//     cssAdded = false;
+//     onMyFrameLoad();
+// });
+
+document.getElementById('epub_iframe').focus = function () {
+    console.log("Currently in focus");
+    $("#epub_iframe").attr("src", "../server/" + URLs.paths[currentIndex].path + "?rand=" + Math.round(Math.random() * 10000000));
+    changesMade = false
+    cssAdded = false;
+    onMyFrameLoad();
+    //alert("iframe loaded")
+};
+
 $("#insert-alt-text-2").click(function () {
     if (!currentTarget) {
         showSnackBarAlert("snackbar-select-image");
@@ -140,10 +157,6 @@ myIframe.addEventListener("load", function () {
     $iframeDOM = $(myIframe).contents();
     ImageCounter();
 
-    // if (!cssAdded) {
-    //     alert();
-    //     addCSSToIframe();
-    // }
     $iframeDOM.find("body").on("click", function (a) {
         var b = $(a.target).clone();
         if (b.is("img")) {
